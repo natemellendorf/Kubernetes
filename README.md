@@ -145,11 +145,28 @@ Use the following command to get the cluster name.
 k3d cluster list
 ```
 
-Use the following to get the CA certificate for GitLab
+Use the following command to get the name of a webservice pod.  
+
+```
+kubectl get pods | grep gitlab-webservice
+```
+
+Use the following command to get the API address if your local cluster
+
+```
+kubectl exec -it <gitlab-webservice pod name> -- printenv | grep KUBE
+```
+
+Use the following command to find the name of the default token for the cluster.
 
 ```
 kubectl get secrets
-kubectl get secret default-token-9tkdm -o jsonpath="{['data']['ca\.crt']}" | base64 --decode
+```
+
+Use the following to get the CA certificate for GitLab
+
+```
+kubectl get secret <defaukt-token> -o jsonpath="{['data']['ca\.crt']}" | base64 --decode
 ```
 
 Create a new manifest called **gitlab-admin-service-account.yaml**, and add the follwoing to it.
