@@ -74,16 +74,12 @@ All pods should have a status of Running.
 If not, review the logs of your master node by running:  
 ```docker logs k3d-k3s-default-server-0```
 
-<br>
-
 ---
 
 You can pause here, a play around with the cluster via kubectl.  
 Once you're ready, continue on to deploy MetalLB and the GitLab suite.
 
 ---
-
-<br>
 
 ## MetalLB
 
@@ -141,11 +137,7 @@ kubectl create -f metal-lb-layer2-config.yaml
 At this point, you should now have MetalLB provisioned and ready to handle new service requests.  
 When you deploy GitLab, a new service will be created and you will see it grab the first available `<External>` IP from the range provided.
 
-<br>
-
 ---
-
-<br>
 
 ## GitLab
 
@@ -180,8 +172,6 @@ This can take anywhere from 5 - 10 minutes.
 
 **Note:** svclb-gitlab-nginx-ingress-controller-`*` will remaining in Pending status
 
-<br>
-
 ### Configure External Access
 
 Now that GitLab is running, we need to configure our workstation to allow external access to GitLab.  
@@ -200,8 +190,6 @@ gitlab-nginx-ingress-controller   LoadBalancer   10.43.16.145   172.30.0.16   80
 
 In this case, the \<Service External IP> would be `172.30.0.16`
 
-<br>
-
 ---
 
 At this point, you should be able to test access to GitLab via MetalLB.  
@@ -215,8 +203,6 @@ Once you're ready, proceed with the following steps to NAT access to GitLab.
 This will allow other hosts on your network to access the cluster. 
 
 ---
-
-<br>
 
 #### Get Interface Information
 
@@ -247,8 +233,6 @@ sudo iptables -t nat -I PREROUTING -d <Service External IP> -p tcp --dport 80 -j
 sudo iptables -t nat -I PREROUTING -d <Service External IP> -p tcp --dport 443 -j DNAT --to <Host IP>:443
 ```
 
-<br>
-
 ---
 
 At this point, you should be able to access GitLab from devices on your local network.  
@@ -256,13 +240,9 @@ If you wanted to, you could publish this to the web for external testing on the 
 
 ---
 
-<br> 
-
 ## Configure K8 Integration
 
 Now that GitLab is deployed, we can access it and update its configuration.
-
-<br>
 
 ### Get Root Password
 
@@ -272,13 +252,9 @@ Use the following command to retrieve the password created for the root user.
 kubectl get secret gitlab-gitlab-initial-root-password -ojsonpath='{.data.password}' | base64 --decode ; echo
 ```
 
-<br>
-
 ### Login to GitLab
 
 Browse to `https://gitlab.<domain.com>`
-
-<br>
 
 ### Permit local network access
 
@@ -292,8 +268,6 @@ Reference: `https://gitlab.<domain.com>/admin/clusters`
 
 Click: Add Kubernetes Cluster  
 Click: Connect existing cluster  
-
-<br>
 
 ### Gather the requested information
 
@@ -363,6 +337,8 @@ Get the service account secret
 ```
 kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep gitlab | awk '{print $1}')
 ```
+
+---
 
 ## References:
 - [K3D](https://k3d.io/)
