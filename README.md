@@ -1,6 +1,16 @@
 # Kubernetes - GitLab
 Documented steps to deploy a development Kubernetes (k3s/k3d) cluster on Ubuntu 20.04
 
+# Prereq
+
+[Install](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04) Docker
+
+[Install](https://github.com/rancher/k3d#get) k3d
+
+```
+curl -s https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
+```
+
 # Create Cluster
 
 Run the following command to create a new Kubernetes cluster.
