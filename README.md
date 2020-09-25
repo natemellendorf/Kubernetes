@@ -74,8 +74,8 @@ helm repo update
 helm upgrade --install gitlab gitlab/gitlab \
   --timeout 800s \
   --set global.edition=ce \
-  --set global.hosts.domain=configpy.com \
-  --set certmanager-issuer.email=nate.mellendorf@gmail.com \
+  --set global.hosts.domain=example.com \
+  --set certmanager-issuer.email=your.email@example.com \
   --set gitlab-runner.runners.privileged=true
 ```
 
